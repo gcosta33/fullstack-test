@@ -69,6 +69,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div id="container">
 	<h1>Welcome to CodeIgniter!</h1>
+	<form action="welcome/test" method="get">
+    <input type="text" name="val"/>
+    <input type="submit" value="Send"/>
+</form>
 	<?php
 	
 	?>

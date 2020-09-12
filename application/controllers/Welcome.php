@@ -21,14 +21,22 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$this->load->library('session');
-        $this->load->helper('url');
+		$this->load->helper('url');
+	
+		
 
+		$this->load->view('welcome_message');
 		if($this->session->has_userdata('user')){
-			// // $this->load->view('welcome_message');
 		}else{
-			redirect('/login/');
+			// redirect('/login/');
 
 		}
 
 	}
+	public function test()
+    {
+        $this->load->helper('url');
+        log_message('info', 'Post value: '.$this->input->post('val'));
+        echo json_encode($this->input->post('val'));
+    }
 }
