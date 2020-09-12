@@ -25,6 +25,11 @@
             return $query->result_array();
 
         }
+        public function show($id){
+        $sql = "SELECT * from products WHERE id = ?";
+            $query = $this->db->query($sql,array($id));
+            return $query->row();
+        }
         public function get($brand = "%", $size = "%", $amout = "%",$value = "%"){
             $sql = "
             SELECT 
@@ -45,17 +50,38 @@
             $query = $this->db->query($sql,$where);
             return $query->result_array();
         }
-        public function create($brands,$flavor_name = NULL,$size_ref,$type_ref,$amout,$value){
+        public function create($id_brand,$flavor_name = NULL,$size_ref,$type_ref,$amout,$value){
             $sql="
             INSERT INTO `products` (`Id`, `id_brand`, `flavor_name`, `id_size`, `id_type`, `amout`, `value`)
             VALUES( NULL, ? , ?, ? , ? , ?, ?)
             ";
-            $values = array($brands,$flavor_name,$size_ref,$type_ref,$amout,$value);
+            $values = array($id_brand,$flavor_name,$size_ref,$type_ref,$amout,$value);
             if($this->db->query($sql,$values)){
                 return "sucess";
             }else{
-                return "failed";
+                return NULL;
             };
+        }
+        public function update($id,$id_brand = NULL,$flavor_name = NULL,$size_ref = NULL,$type_ref = NULL,$amout = NULL,$value = NULL){
+            $sql="UPDATE `products` SET ";
+            $values = array(
+                empty($id_brand)? NULL: "id_brand" =>$id_brand,
+                empty($flavor_name)? NULL: "flavor_name" =>$flavor_name,
+                empty($size_ref)? NULL : "id_size" =>$size_ref,
+                empty($type_ref)? NULL: "id_type" =>$type_ref,
+                empty($amout)? NULL: "amout" =>$amout,
+                empty($value)? NULL: "value" =>$value);
+            
+            if($this->db->update('products', array_filter($values), array('id' => $id))){
+                return "sucess";
+            }else{
+                return NULL;
+            };
+        }
+        public function delete($ids){    
+            foreach ($ids as $id) {
+                $this->db->delete('products',array('id'=>$id));
+            }
         }
 
     }

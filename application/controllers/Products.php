@@ -19,4 +19,75 @@ class Products extends CI_Controller {
             echo json_encode($result);
         }
     }
+    public function show($id)
+	{
+        $id = $this->input->get('id');
+        $result = $this->Product->show($id);
+        if(!empty($result)){
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($result));
+        }else{
+            $this->output
+                ->set_status_header(404, "Error function: " . strtoupper(__FUNCTION__) ."!" );
+        }
+    }
+    public function get(){
+        $brand = $this->input->get('brand')."%";
+        $size = $this->input->get('size')."%";
+        $amout = $this->input->get('amout')."%";
+        $value = $this->input->get('value')."%";
+        $result = $this->Product->get($brand, $size, $amout,$value);
+        if(!empty($result)){
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($result));
+        }else{
+            print_r($result);
+            $this->output
+                ->set_status_header(404, "Error function: " . strtoupper(__FUNCTION__) ."!"  );
+        }
+
+    }
+    public function update(){
+        $id = $this->input->post('id');
+        $id_brand = $this->input->post('id_brand');
+        $flavor_name = $this->input->post('flavor_name');
+        $type_ref = $this->input->post('type_ref');
+        $size_ref = $this->input->post('size_ref');
+        $amout = $this->input->post('amout');
+        $value = $this->input->post('value');
+        $result = $this->Product->update($id,$id_brand,$flavor_name,$size_ref,$type_ref,$amout,$value);
+        if(!empty($result)){
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($result));
+        }else{
+            print_r($result);
+            $this->output
+                ->set_status_header(404, "Error function: " . strtoupper(__FUNCTION__) ."!"  );
+        }
+    }
+    public function create(){
+        $name = $this->input->post('name');
+        $id_brand = $this->input->post('id_brand');
+        $flavor_name = $this->input->post('flavor_name');
+        $type_ref = $this->input->post('type_ref');
+        $size_ref = $this->input->post('size_ref');
+        $amout = $this->input->post('amout');
+        $value = $this->input->post('value');
+        $result = $this->Product->create($name,$id_brand,$flavor_name,$size_ref,$type_ref,$amout,$value);
+        if(!empty($result)){
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($result));
+        }else{
+            print_r($result);
+            $this->output
+                ->set_status_header(404, "Error function: " . strtoupper(__FUNCTION__) ."!"  );
+        }
+    }
+    
+
+    
 }
