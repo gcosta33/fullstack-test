@@ -68,10 +68,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 
 <div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
-	<form action="welcome/test" method="get">
+	<h1>Welcome to CodeIgniter!<?php echo $user['user-name']?>  </h1>
+	<form action="" method="get">
     <input type="text" name="val"/>
-    <input type="submit" value="Send"/>
+    <input type="button" value="Send"/>
 </form>
 	<?php
 	

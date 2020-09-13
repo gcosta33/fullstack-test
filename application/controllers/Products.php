@@ -2,9 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Products extends CI_Controller {
+    
 
     public function __construct(){
         parent::__construct();
+
         $this->load->model('Product');
         $this->load->helper('url');
 
@@ -12,11 +14,15 @@ class Products extends CI_Controller {
 
 	public function index()
 	{
+        $this->load->library('logincheck');
         $result = $this->Product->index();
         if(!empty($result)){
-            echo json_encode($result);
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($result));
         }else{
-            echo json_encode($result);
+            $this->output
+                ->set_status_header(404, "Error function: " . strtoupper(__FUNCTION__) ."!" );
         }
     }
     public function show($id)
@@ -49,8 +55,7 @@ class Products extends CI_Controller {
         }
 
     }
-    public function update(){
-        $id = $this->input->post('id');
+    public function update($id){
         $id_brand = $this->input->post('id_brand');
         $flavor_name = $this->input->post('flavor_name');
         $type_ref = $this->input->post('type_ref');
@@ -87,7 +92,17 @@ class Products extends CI_Controller {
                 ->set_status_header(404, "Error function: " . strtoupper(__FUNCTION__) ."!"  );
         }
     }
-    
-
+    public function delete($id){
+        $result = $this->Product->delete($id);
+        if(!empty($result)){
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($result));
+        }else{
+            print_r($result);
+            $this->output
+                ->set_status_header(404, "Error function: " . strtoupper(__FUNCTION__) ."!"  );
+        }
+    }
     
 }

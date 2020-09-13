@@ -26,9 +26,25 @@
 
         }
         public function show($id){
-        $sql = "SELECT * from products WHERE id = ?";
-            $query = $this->db->query($sql,array($id));
-            return $query->row();
+        $sql = "SELECT 
+                    products.id,
+                    brands.name,
+                    flavor_name,
+                    sizes.size_ref,
+                    types_soda.type_ref,
+                    amout,
+                    value 
+                FROM products
+                LEFT JOIN brands ON brands.id =  products.id_brand
+                LEFT JOIN sizes ON sizes.id = products.id_size
+                LEFT JOIN types_soda ON types_soda.id =  products.id_type
+                WHERE products.id = ?
+                ";
+            if($query = $this->db->query($sql,array($id))){
+                return $query->row();
+            }else{
+                return NULL;
+            };
         }
         public function get($brand = "%", $size = "%", $amout = "%",$value = "%"){
             $sql = "
@@ -47,8 +63,11 @@
             WHERE brands.name LIKE ? AND sizes.size_ref LIKE ? AND amout LIKE ? AND value LIKE ?
             ";
             $where= array($brand, $size, $amout,$value);
-            $query = $this->db->query($sql,$where);
-            return $query->result_array();
+            if($query = $this->db->query($sql,$where)){
+                return $query->result_array();
+            }else{
+                return NULL;
+            };
         }
         public function create($id_brand,$flavor_name = NULL,$size_ref,$type_ref,$amout,$value){
             $sql="
@@ -71,17 +90,25 @@
                 empty($type_ref)? NULL: "id_type" =>$type_ref,
                 empty($amout)? NULL: "amout" =>$amout,
                 empty($value)? NULL: "value" =>$value);
-            
+            // return(array_filter($values));
             if($this->db->update('products', array_filter($values), array('id' => $id))){
                 return "sucess";
             }else{
                 return NULL;
             };
         }
-        public function delete($ids){    
-            foreach ($ids as $id) {
-                $this->db->delete('products',array('id'=>$id));
+        public function delete($id){    
+            if(!empty(self::show($id))){
+            if($this->db->delete('products',array('id'=>$id))){
+                    return "sucess";
+                }else{
+                    return NULL;
+                };
+            }else{
+                echo "NOT FOUND ID: ".$id;
+                return NULL;
             }
+            
         }
 
     }
