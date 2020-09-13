@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends CI_Controller {
 
     public function __construct(){
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, OPTIONS");
         parent::__construct();
         $this->load->helper('url');
 

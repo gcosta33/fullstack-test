@@ -5,6 +5,8 @@ class Products extends CI_Controller {
     
 
     public function __construct(){
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, OPTIONS");
         parent::__construct();
 
         $this->load->model('Product');
@@ -27,7 +29,6 @@ class Products extends CI_Controller {
     }
     public function show($id)
 	{
-        $id = $this->input->get('id');
         $result = $this->Product->show($id);
         if(!empty($result)){
             $this->output
@@ -38,7 +39,7 @@ class Products extends CI_Controller {
                 ->set_status_header(404, "Error function: " . strtoupper(__FUNCTION__) ."!" );
         }
     }
-    public function get(){
+    public function find(){
         $brand = $this->input->get('brand')."%";
         $size = $this->input->get('size')."%";
         $amout = $this->input->get('amout')."%";

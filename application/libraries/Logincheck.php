@@ -13,15 +13,16 @@ class Logincheck {
         $this->CI->load->helper('url');
 
 
-        if($this->CI->session->get_userdata('user-name')){
+        if($this->CI->session->has_userdata('user-name')){
             // print_r($this->CI->session->get_userdata('usker-name'));
             if(uri_string() === "login"){
                 redirect('/welcome/');
             }
-            return;
+            return TRUE;
         }else{
             if(uri_string() !== "login"){
-                redirect('/login/');
+                echo "Not log";
+            //    die;
             }
         }
     }
