@@ -25,11 +25,8 @@ class Welcome extends CI_Controller {
 
 		}
 	}
-	public function test($id)
+	public function test()
     {
-        // $this->load->helper('url');
-        // log_message('info', 'Post value: '.$this->input->post('val'));
-		// echo json_encode($this->input->post('val'));
-		echo $id;
+        $this->load->view('dashboard');
     }
 }
