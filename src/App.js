@@ -32,11 +32,11 @@ function App() {
       <Row className="justify-content-md-center">
         
       <Col md={{ span: 1, offset: 10 }}>
-          <Pagination >
+          {/* <Pagination >
                 <Pagination.Prev href="#" />
                 <Pagination.Item >{12}</Pagination.Item>
                 <Pagination.Next  href="#"/>
-          </Pagination>
+          </Pagination> */}
           </Col>
 
       </Row>

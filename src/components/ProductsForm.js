@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 
 import { update,create,show } from '../utils/services.js'
+import ToastMensage from '../utils/ToastMensage.js'
+
 import {
     Form,
     Button,
@@ -10,6 +12,12 @@ import {
 } from 'react-bootstrap'
 
 export default function Main(props){
+
+    //TOAST
+    const [showToast, setShowToast] = useState(false)
+    const [toastMes, setToastMes] = useState(false)
+  
+
   const [validated, setValidated] = useState(false);
   const [id,setId] = useState(props?.id);
   const [flavor_name,setFlavor_name] = useState(undefined);
@@ -37,30 +45,46 @@ export default function Main(props){
 }, [id])
 
 
-  function handleSubmit(event){
+  async function handleSubmit(event){
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
-      event.stopPropagation();
+      // event.stopPropagation();
       console.log("a")
     }else{
       event.preventDefault();
       if(id !== undefined && props?._method === "Editar"){
-        const res = update(id,id_brand,
+        const res = await update(id,id_brand,
           flavor_name,
           type_ref,
           size_ref,
           amout,
           value)
+          console.log(res);
+          if(res === "success"){
+            setShowToast(true)
+            setToastMes("Cadastro concluida com sucesso")
+          }else if(res === "Error"){
+            setShowToast(true)
+            setToastMes("Erro ao atualizar, verifique os dados")
+          }  
 
       }else if(props?._method === "Cadastrar"){
-        const res = create(
+        const res = await create(
           id_brand,
           flavor_name,
           type_ref,
           size_ref,
           amout,
-          value)       
+          value)  
+          console.log(res);
+          if(res === "success"){
+            setShowToast(true)
+            setToastMes("Cadastro concluida com sucesso")
+          }else if(res === "Error"){
+            setShowToast(true)
+            setToastMes("Erro ao cadastrar, verifique os dados")
+          }     
       }else{
         console.log("Fail")
       }
@@ -81,7 +105,7 @@ export default function Main(props){
             <Form.Control
             value={id_brand}
             onChange={ e=> setId_brand( e.target.value )}
-            name="flavor_name"
+            name="id_brand"
             maxLength="30"
             type="text"
             placeholder="Marca do Produto" />
@@ -96,7 +120,7 @@ export default function Main(props){
             <Form.Control
             value={flavor_name}
             onChange={ e=> setFlavor_name( e.target.value )}
-            name="id_"
+            name="flavor_name"
             maxLength="30"
             type="text"
             placeholder="Nome do Produto" />
@@ -164,6 +188,12 @@ export default function Main(props){
             <Button block type="submit">Salvar</Button>
           </Col>
         </Form.Group>
+        <ToastMensage 
+        showToast={showToast} 
+        setShow ={setShowToast}
+        message={toastMes}
+        _method= {"Excluir"}
+      />
       </Form>
     )
 

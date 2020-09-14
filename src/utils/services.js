@@ -24,6 +24,7 @@ export async function index() {
         }
     } catch (e) {
         console.log(e.message);
+        
     }
 }
 export async function _delete(ids){
@@ -40,13 +41,10 @@ export async function _delete(ids){
             console.log(e.message);
         }
     }
-    if(ids.length > 0){
-        console.log(ids);
-        // conetion(ids)
-    }else{
-        console.log(ids);
-        // ids.map(id =>conetion(id))
-    }
+    
+    console.log(ids);
+    ids.map(id =>conetion(id))
+    
    
 }
 
@@ -116,14 +114,13 @@ export async function update(
         )
         if (response) {
             console.log(response.data);
-            return response.data
+            return response
         }
     } catch (e) {
         console.log(e.message);
     }
 }
 export async function create(
-    name,
     id_brand,
     flavor_name,
     type_ref,
@@ -134,7 +131,6 @@ export async function create(
     try {
         console.log({
             data: {
-                name,
                 id_brand,
                 flavor_name,
                 type_ref,
@@ -145,7 +141,6 @@ export async function create(
         )
         
           const requestBody={
-            name,
             id_brand,
             flavor_name,
             type_ref,
@@ -158,9 +153,10 @@ export async function create(
             axiosConfig
         )
         if (response) {
-            return response.data
+            return response
         }
     } catch (e) {
-        console.log(e.message);
+        const message = "Error"
+        return message
     }
 }

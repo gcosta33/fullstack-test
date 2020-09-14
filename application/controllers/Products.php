@@ -79,14 +79,13 @@ class Products extends CI_Controller {
     }
     public function create(){
         
-        $name = $this->input->post('name');
         $id_brand = $this->input->post('id_brand');
         $flavor_name = $this->input->post('flavor_name');
         $type_ref = $this->input->post('type_ref');
         $size_ref = $this->input->post('size_ref');
         $amout = $this->input->post('amout');
         $value = $this->input->post('value');
-        $result = $this->Product->create($name,$id_brand,$flavor_name,$size_ref,$type_ref,$amout,$value);
+        $result = $this->Product->create($id_brand,$flavor_name,$size_ref,$type_ref,$amout,$value);
         if(!empty($result)){
             $this->output
                 ->set_content_type('application/json')

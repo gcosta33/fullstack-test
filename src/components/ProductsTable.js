@@ -13,9 +13,12 @@ import {
 } from 'react-bootstrap'
 
 export default function Main() {
-  const [products, setProducts] = useState([])
+  //TOAST
   const [showToast, setShowToast] = useState(false)
   const [toastMes, setToastMes] = useState(false)
+
+
+  const [products, setProducts] = useState([])
   const [delectionList, setDelectionList] = useState([])
   const [delectionActive, setDelectionActive] = useState(false)
 
@@ -30,7 +33,6 @@ export default function Main() {
   }, [])
   function handleDeleteCk(){
     if(delectionActive){
-      
       setDelectionList([])
       setDelectionActive(false)
     }else{
@@ -39,8 +41,13 @@ export default function Main() {
     }
   }
   async function handleDelete(id){
-    console.log(delectionList)
-    const response = await _delete(delectionList?.length > 0? delectionList : id )
+    if(id !== undefined){
+      console.log(id);
+      const delectionList =[id]
+      console.log(delectionList)
+      const response = await _delete(delectionList)
+    }
+    const response = await _delete(delectionList)
     if(response === "success"){
       setShowToast(true)
       setToastMes("Exclusão concluida com sucesso")
