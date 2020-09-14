@@ -13,7 +13,7 @@ export default function Main(props){
   const [validated, setValidated] = useState(false);
   const [id,setId] = useState(props?.id);
   const [flavor_name,setFlavor_name] = useState(undefined);
-  const [id_brand,setId_brand] = useState(0);
+  const [id_brand,setId_brand] = useState(undefined);
   const [type_ref,setType_ref] = useState(0);
   const [size_ref,setSize_ref] = useState(0);
   const [amout,setAmout] = useState();
@@ -71,38 +71,37 @@ export default function Main(props){
 
     return(
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        
+
         <Form.Group as={Row} controlId="formHorizontalBrand">
           <Form.Label column sm={2}>
-            Nome
+            Marca
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+            value={id_brand}
+            onChange={ e=> setId_brand( e.target.value )}
+            name="flavor_name"
+            maxLength="30"
+            type="text"
+            placeholder="Marca do Produto" />
+
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId="formHorizontalBrand">
+          <Form.Label column sm={2}>
+            Sabor
           </Form.Label>
           <Col sm={10}>
             <Form.Control
             value={flavor_name}
             onChange={ e=> setFlavor_name( e.target.value )}
-            name="flavor_name"
+            name="id_"
             maxLength="30"
             type="text"
             placeholder="Nome do Produto" />
 
           </Col>
-        </Form.Group>
-
-        <Form.Group as={Row} controlId="formGridState1">
-              <Form.Label column sm={2}>Marcas</Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                  value={id_brand}
-                  onChange={ e=> setId_brand( e.target.value )}
-                  as="select" required name="id_brand" >
-                      <option value="0">Coca Cola</option>
-                      <option value="1">Fanta</option>
-                      <option value="3">Pepsi</option>
-                      <option value="4">Sprite</option>
-                      <option value="5">Sukita</option>
-                      <option value="6">Guaraná Antartica</option>
-
-                  </Form.Control>
-                  </Col>
         </Form.Group>
 
         <Form.Group as={Row} controlId="formGridState2">

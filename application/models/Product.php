@@ -11,14 +11,13 @@
             $query = $this->db->query("
             SELECT 
                 products.id,
-                brands.name,
+                products.id_brand,
                 flavor_name,
                 sizes.size_ref,
                 types_soda.type_ref,
                 amout,
                 value 
             FROM products
-            LEFT JOIN brands ON brands.id =  products.id_brand
             LEFT JOIN sizes ON sizes.id = products.id_size
             LEFT JOIN types_soda ON types_soda.id =  products.id_type
             ");
@@ -28,14 +27,13 @@
         public function show($id){
         $sql = "SELECT 
                     products.id,
-                    brands.name,
+                    products.id_brand,
                     flavor_name,
                     sizes.size_ref,
                     types_soda.type_ref,
                     amout,
                     value 
                 FROM products
-                LEFT JOIN brands ON brands.id =  products.id_brand
                 LEFT JOIN sizes ON sizes.id = products.id_size
                 LEFT JOIN types_soda ON types_soda.id =  products.id_type
                 WHERE products.id = ?
@@ -50,17 +48,16 @@
             $sql = "
             SELECT 
                 products.id,
-                brands.name,
+               products.id_brand,
                 flavor_name,
                 sizes.size_ref,
                 types_soda.type_ref,
                 amout,
                 value 
             FROM products
-            LEFT JOIN brands ON brands.id =  products.id_brand
             LEFT JOIN sizes ON sizes.id = products.id_size
             LEFT JOIN types_soda ON types_soda.id =  products.id_type
-            WHERE brands.name LIKE ? AND sizes.size_ref LIKE ? AND amout LIKE ? AND value LIKE ?
+            WHERE products.id_brand LIKE ? AND sizes.size_ref LIKE ? AND amout LIKE ? AND value LIKE ?
             ";
             $where= array($brand, $size, $amout,$value);
             if($query = $this->db->query($sql,$where)){
@@ -76,7 +73,7 @@
             ";
             $values = array($id_brand,$flavor_name,$size_ref,$type_ref,$amout,$value);
             if($this->db->query($sql,$values)){
-                return "sucess";
+                return "success";
             }else{
                 return NULL;
             };
@@ -92,7 +89,7 @@
                 empty($value)? NULL: "value" =>$value);
             // return(array_filter($values));
             if($this->db->update('products', array_filter($values), array('id' => $id))){
-                return "sucess";
+                return "success";
             }else{
                 return NULL;
             };
@@ -100,7 +97,7 @@
         public function delete($id){    
             if(!empty(self::show($id))){
             if($this->db->delete('products',array('id'=>$id))){
-                    return "sucess";
+                    return "success";
                 }else{
                     return NULL;
                 };

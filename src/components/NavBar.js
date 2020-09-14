@@ -13,7 +13,7 @@ export default function _Navbar(){
   const [modalShow, setModalShow] = React.useState(false);
 
   return(
-    <Navbar collapseOnSelect co expand="lg" bg="info" >
+    <Navbar collapseOnSelect expand="lg" bg="info" >
         <Navbar.Brand  href="#home">SGER</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

@@ -1,12 +1,13 @@
 import axios from 'axios';
 const axiosConfig = {
     headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept':'application/json'
       }
   }
 const qs = require('querystring')
 const api = axios.create({
-    baseURL: 'http://localhost/teste-unilab'
+    baseURL: 'http://localhost/fullstack-test'
 })
 
 export async function index() {
@@ -25,18 +26,28 @@ export async function index() {
         console.log(e.message);
     }
 }
-export async function _delete(id){
-    try {
-        const response = await api.delete(`/products/${id}`,
-           {},axiosConfig
-        )
-        if (response) {
-            console.log(response.data);
-            return response.data
+export async function _delete(ids){
+    async function conetion(id){
+        try {
+            const response = await api.post(`/products/delete/${id}`,
+               {},axiosConfig
+            )
+            if (response) {
+                console.log(response.data);
+                return response.data
+            }
+        } catch (e) {
+            console.log(e.message);
         }
-    } catch (e) {
-        console.log(e.message);
     }
+    if(ids.length > 0){
+        console.log(ids);
+        // conetion(ids)
+    }else{
+        console.log(ids);
+        // ids.map(id =>conetion(id))
+    }
+   
 }
 
 export async function show(id) {

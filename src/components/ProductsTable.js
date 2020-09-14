@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {} from 'react-icons'
+import { FaTrash,FaCheckCircle,FaRegTimesCircle,FaCheckDouble } from "react-icons/fa";
+
 
 import Modal from './Modal.js';
 
-import { index } from '../utils/services.js'
+import { index,_delete } from '../utils/services.js'
+import ToastMensage from '../utils/ToastMensage.js'
 import {
   Table,
   Form,
@@ -12,6 +14,8 @@ import {
 
 export default function Main() {
   const [products, setProducts] = useState([])
+  const [showToast, setShowToast] = useState(false)
+  const [toastMes, setToastMes] = useState(false)
   const [delectionList, setDelectionList] = useState([])
   const [delectionActive, setDelectionActive] = useState(false)
 
@@ -24,9 +28,9 @@ export default function Main() {
     loadProducts()
 
   }, [])
-  function handleDelete(){
+  function handleDeleteCk(){
     if(delectionActive){
-      console.log(delectionList)
+      
       setDelectionList([])
       setDelectionActive(false)
     }else{
@@ -34,6 +38,18 @@ export default function Main() {
       setDelectionActive(true)
     }
   }
+  async function handleDelete(id){
+    console.log(delectionList)
+    const response = await _delete(delectionList?.length > 0? delectionList : id )
+    if(response === "success"){
+      setShowToast(true)
+      setToastMes("Exclusão concluida com sucesso")
+    }else{
+      setShowToast(true)
+      setToastMes("Erro ao excluir")
+    }
+  }
+
   function renderItens() {
     if (products?.length === 0 || products === undefined) {
       return (
@@ -47,23 +63,23 @@ export default function Main() {
     } else {
       return products.map(product => (
         <tr key={product.id}>
-          <th >
+          <td style={{textAlign:'center'}}>
             <Modal id={product.id} _method="Editar"></Modal>
-          </th>
-          <th>{product.name}</th>
-          <th>{product.flavor_name}</th>
-          <th>{product.size_ref}</th>
-          <th>{product.type_ref}</th>
-          <th>{product.amout}</th>
-          <th>{product.value} R$</th>
-          <th>
+          </td>
+          <td>{product.id_brand}</td>
+          <td>{product.flavor_name}</td>
+          <td>{product.size_ref}</td>
+          <td>{product.type_ref}</td>
+          <td>{product.amout}</td>
+          <td>{product.value} R$</td>
+          <td style={{textAlign:'center'}}>
             {
-              !delectionActive? <Button variant="warning" onClick={()=>{}}></Button> : <Form.Check 
+              !delectionActive? <Button variant="warning" onClick={()=>handleDelete(product.id)}><FaTrash/></Button> : <Form.Check 
                           onChange={()=>setDelectionList(delectionList=>[...delectionList,product.id])}
                           aria-label="option 1"
                           id={`default-${product.id}`}
                           />
-            }</th>
+            }</td>
         </tr>
       ))
 
@@ -75,18 +91,18 @@ export default function Main() {
     <Table size="sm" responsive striped bordered hover>
       <thead>
         <tr>
-          <th>#</th>
+          <th style={{textAlign:'center'}}>#</th>
           <th>Nome</th>
           <th>Sabor</th>
           <th>Tamanho</th>
           <th>Tipo</th>
           <th>Quantidade</th>
           <th>Valor</th>
-          <th>
+          <th style={{textAlign:'center'}}>
             {
-              !delectionActive?  <Button variant="link" onClick={()=>handleDelete()}>Ex</Button>  : <> 
-              <Button variant="link" onClick={()=>handleDelete()}>Ex</Button>
-              <Button variant="link" onClick={()=>handleDelete()}>Ex</Button> </>
+              !delectionActive?  <Button variant="link" onClick={()=>handleDeleteCk()}><FaTrash/><FaCheckDouble/></Button>  : <> 
+              <Button variant="link" onClick={()=>handleDeleteCk()}><FaRegTimesCircle/></Button>
+              <Button variant="link" onClick={()=>handleDelete()}><FaCheckCircle/></Button> </>
             }</th>
         </tr>
       </thead>
@@ -96,6 +112,12 @@ export default function Main() {
         }
 
       </tbody>
+      <ToastMensage 
+        showToast={showToast} 
+        setShow ={setShowToast}
+        message={toastMes}
+        _method= {"Excluir"}
+      />
     </Table>)
 }
 
