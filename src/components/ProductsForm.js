@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { update,create } from '../utils/services.js'
+
+import { update,create,show } from '../utils/services.js'
 import {
     Form,
     Button,
@@ -8,15 +9,32 @@ import {
     Col
 } from 'react-bootstrap'
 
-export default function Main(id,_method){
+export default function Main(props){
   const [validated, setValidated] = useState(false);
-  const [name,setName] = useState('');
+  const [id,setId] = useState(props?.id);
   const [flavor_name,setFlavor_name] = useState(undefined);
   const [id_brand,setId_brand] = useState(0);
   const [type_ref,setType_ref] = useState(0);
   const [size_ref,setSize_ref] = useState(0);
   const [amout,setAmout] = useState();
   const [value,setValue] = useState();
+
+  useEffect(() => {
+    async function loadProducts() {
+      if(props.id !== undefined){
+        let data = await show(props.id)
+          console.log(props?._method);
+          setFlavor_name(data.flavor_name)
+          setId_brand(data.id_brand)
+          setType_ref(data.type_ref)
+          setSize_ref(data.size_ref)
+          setAmout(data.amout)
+          setValue(data.value)
+      }
+      }
+    loadProducts()
+
+}, [id])
 
 
   function handleSubmit(event){
@@ -27,28 +45,31 @@ export default function Main(id,_method){
       console.log("a")
     }else{
       event.preventDefault();
-      const res = create(name,
+      if(id !== undefined && props?._method === "Editar"){
+        const res = update(
         id_brand,
         flavor_name,
         type_ref,
         size_ref,
         amout,
         value)
-        console.log(res)
+
+      }else if(props?._method === "Cadastrar"){
+        const res = create(
+          id_brand,
+          flavor_name,
+          type_ref,
+          size_ref,
+          amout,
+          value)       
+      }else{
+        console.log("Fail")
+      }
     }
-    console.log(
-      name,
-      id_brand,
-      flavor_name,
-      type_ref,
-      size_ref,
-      amout,
-      value
-      )
 
     setValidated(true);
   }
- 
+
     return(
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group as={Row} controlId="formHorizontalEmail">
@@ -56,21 +77,21 @@ export default function Main(id,_method){
             Nome
           </Form.Label>
           <Col sm={10}>
-            <Form.Control 
+            <Form.Control
             value={flavor_name}
             onChange={ e=> setFlavor_name( e.target.value )}
             name="flavor_name"
             maxLength="30"
-            type="text" 
+            type="text"
             placeholder="Nome do Produto" />
-           
+
           </Col>
         </Form.Group>
 
         <Form.Group as={Row} controlId="formGridState">
               <Form.Label column sm={2}>Marcas</Form.Label>
                 <Col sm={10}>
-                  <Form.Control 
+                  <Form.Control
                   value={id_brand}
                   onChange={ e=> setId_brand( e.target.value )}
                   as="select" required name="id_brand" >
@@ -80,7 +101,7 @@ export default function Main(id,_method){
                       <option value="4">Sprite</option>
                       <option value="5">Sukita</option>
                       <option value="6">Guaraná Antartica</option>
-              
+
                   </Form.Control>
                   </Col>
         </Form.Group>
@@ -93,7 +114,7 @@ export default function Main(id,_method){
                       <option value="0">1 L</option>
                       <option value="1">250 mL</option>
                       <option value="2">600 mL</option>
-              
+
                   </Form.Control>
                   </Col>
         </Form.Group>
@@ -116,12 +137,12 @@ export default function Main(id,_method){
             Valor
           </Form.Label>
           <Col sm={10}>
-            <Form.Control 
+            <Form.Control
             required
             value={value}
             onChange={ e=> setValue( e.target.value )}
             name="value"
-            type="number" 
+            type="number"
             placeholder="Valor do Produto" />
           </Col>
         </Form.Group>
@@ -130,12 +151,12 @@ export default function Main(id,_method){
             Quantidade
           </Form.Label>
           <Col sm={10}>
-            <Form.Control 
+            <Form.Control
             required
             value={amout}
             onChange={ e=> setAmout( e.target.value )}
             name="amout"
-            type="number" 
+            type="number"
             placeholder="Quantidade do Produto em estoque" />
           </Col>
         </Form.Group>
@@ -147,5 +168,5 @@ export default function Main(id,_method){
         </Form.Group>
       </Form>
     )
-  
+
 }

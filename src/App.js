@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Modal from './Modal.js';
+import Modal from './components/Modal.js';
 import { show } from './utils/services.js'
 import ProductsForm from './components/ProductsForm.js'
 import NavBar from './components/NavBar.js'
@@ -27,7 +27,6 @@ function App() {
           <ProductsTable></ProductsTable>
         </Col>
       </Row>
-      <ProductsForm></ProductsForm>
       <Row>
         <Col><Modal></Modal></Col>
         <Col><Button variant="outline-dark" onClick={

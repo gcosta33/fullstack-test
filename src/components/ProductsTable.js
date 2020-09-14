@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import Modal from './Modal.js';
+
 import { index } from '../utils/services.js'
 import {
     Table
@@ -7,6 +9,7 @@ import {
 
 export default function Main() {
     const [products, setProducts] = useState([])
+    
 
     useEffect(() => {
         async function loadProducts() {
@@ -19,7 +22,7 @@ export default function Main() {
     function renderItens() {
         console.log(products)
       
-        if (products?.length == 0 || products == undefined ) {
+        if (products?.length === 0 || products === undefined ) {
             return (
                 <tr>
                     <td colSpan="7" >
@@ -32,7 +35,9 @@ export default function Main() {
         } else {
             return products.map(product => (
                 <tr key={product.id}>
-                    <th>{product.id}</th>
+                    <th >
+                        <Modal id={product.id} _method="Editar"></Modal>
+                    </th>
                     <th>{product.name}</th>
                     <th>{product.flavor_name}</th>
                     <th>{product.size_ref}</th>

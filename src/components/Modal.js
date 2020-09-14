@@ -1,7 +1,9 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import Nav from 'react-bootstrap/Nav'
 import React from 'react';
 
+import ProductsForm from './ProductsForm'
 
 
 function MyVerticallyCenteredModal(props) {
@@ -13,17 +15,12 @@ function MyVerticallyCenteredModal(props) {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
+          <Modal.Title {...props} id="contained-modal-title-vcenter">
+            {props._method}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </p>
+         <ProductsForm _method={props._method} id={props.id}></ProductsForm>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={props.onHide}>Close</Button>
@@ -31,17 +28,18 @@ function MyVerticallyCenteredModal(props) {
       </Modal>
     );
   }
-  
- export default function App() {
-    const [modalShow, setModalShow] = React.useState(false);
+
+ export default function App(props) {
+    const [modalShow, setModalShow] = React.useState(props.modalShow);
   
     return (
       <>
-        <Button variant="primary" onClick={() => setModalShow(true)}>
-          Launch vertically centered modal
+        <Button variant="none" onClick={() => setModalShow(true)}>
+          {props._method}
         </Button>
   
         <MyVerticallyCenteredModal
+          _method={props._method} id={props.id}
           show={modalShow}
           onHide={() => setModalShow(false)}
         />
