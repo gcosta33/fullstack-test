@@ -46,13 +46,12 @@ export default function Main(props){
     }else{
       event.preventDefault();
       if(id !== undefined && props?._method === "Editar"){
-        const res = update(
-        id_brand,
-        flavor_name,
-        type_ref,
-        size_ref,
-        amout,
-        value)
+        const res = update(id,id_brand,
+          flavor_name,
+          type_ref,
+          size_ref,
+          amout,
+          value)
 
       }else if(props?._method === "Cadastrar"){
         const res = create(
@@ -72,7 +71,7 @@ export default function Main(props){
 
     return(
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Form.Group as={Row} controlId="formHorizontalEmail">
+        <Form.Group as={Row} controlId="formHorizontalBrand">
           <Form.Label column sm={2}>
             Nome
           </Form.Label>
@@ -88,7 +87,7 @@ export default function Main(props){
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row} controlId="formGridState">
+        <Form.Group as={Row} controlId="formGridState1">
               <Form.Label column sm={2}>Marcas</Form.Label>
                 <Col sm={10}>
                   <Form.Control
@@ -106,8 +105,8 @@ export default function Main(props){
                   </Col>
         </Form.Group>
 
-        <Form.Group as={Row} controlId="formGridState">
-              <Form.Label column sm={2}>Tipo da Embalagem</Form.Label>
+        <Form.Group as={Row} controlId="formGridState2">
+              <Form.Label column sm={2}>Tamanho da Embalagem</Form.Label>
                 <Col sm={10}>
                   <Form.Control as="select" required name="size_ref" value={size_ref}
                   onChange={ e=> setSize_ref( e.target.value )}>
@@ -119,7 +118,7 @@ export default function Main(props){
                   </Col>
         </Form.Group>
 
-        <Form.Group as={Row} controlId="formGridState">
+        <Form.Group as={Row} controlId="formGridState3">
               <Form.Label column sm={2}>Tipo da Embalagem</Form.Label>
                 <Col sm={10}>
                   <Form.Control as="select" required name="type_ref" value={type_ref}
@@ -132,7 +131,7 @@ export default function Main(props){
                   </Col>
         </Form.Group>
 
-        <Form.Group as={Row} controlId="formHorizontalEmail">
+        <Form.Group as={Row} controlId="formHorizontavalue">
           <Form.Label column sm={2}>
             Valor
           </Form.Label>
@@ -146,7 +145,7 @@ export default function Main(props){
             placeholder="Valor do Produto" />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId="formHorizontalEmail">
+        <Form.Group as={Row} controlId="formHorizontalsize">
           <Form.Label column sm={2}>
             Quantidade
           </Form.Label>

@@ -83,7 +83,6 @@ export async function find(
 
 export async function update(
     id,
-    name,
     id_brand,
     flavor_name,
     type_ref,
@@ -93,7 +92,6 @@ export async function update(
 ) {
     try {
         const requestBody={
-            name,
             id_brand,
             flavor_name,
             type_ref,

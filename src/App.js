@@ -20,19 +20,15 @@ import Table from 'react-bootstrap/Table'
 function App() {
   return (
     <Container className="mt-1" fluid="sm">
+
       <NavBar></NavBar>
       <Row  >
-        <Col xs={12} sm={12}>
+        <Col >
           {/* table */}
           <ProductsTable></ProductsTable>
         </Col>
       </Row>
-      <Row>
-        <Col><Modal></Modal></Col>
-        <Col><Button variant="outline-dark" onClick={
-                        () => show(9)
-                    }>Search</Button></Col>
-      </Row>
+     
       <Row className="justify-content-md-center">
         
       <Col md={{ span: 1, offset: 10 }}>
