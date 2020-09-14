@@ -21,7 +21,7 @@ class Logincheck {
             return TRUE;
         }else{
             if(uri_string() !== "login"){
-                echo "Not log";
+                // echo "Not log";
             //    die;
             }
         }

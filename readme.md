@@ -2,18 +2,16 @@
 ** Projeto Pratico para UNILAB **
 ###################
 
-*******************
-Server Requirements
-*******************
-
-PHP version 5.6 or newer is recommended.
-
 ************
 Installation
 ************
+Clone this project from github:
+https://github.com/gcosta33/fullstack-test
+then type this command 
 
 `
 npm install
+
 `
 
 *******
@@ -26,4 +24,8 @@ agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/so
 *********
 Resources
 *********
-
+CodeIgniter 3.1
+Axios
+Bootstrap
+React
+React-bootstrap

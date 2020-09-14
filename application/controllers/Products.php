@@ -6,7 +6,10 @@ class Products extends CI_Controller {
 
     public function __construct(){
         header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: GET, OPTIONS");
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding");
+
+       
         parent::__construct();
 
         $this->load->model('Product');
@@ -75,6 +78,7 @@ class Products extends CI_Controller {
         }
     }
     public function create(){
+        
         $name = $this->input->post('name');
         $id_brand = $this->input->post('id_brand');
         $flavor_name = $this->input->post('flavor_name');
