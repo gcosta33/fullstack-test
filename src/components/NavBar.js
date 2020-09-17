@@ -4,13 +4,9 @@ import Modal from './Modal.js';
 import {
     Navbar,
     Nav,
-    Form,
-    FormControl,
-    Button
   } from 'react-bootstrap'
 
 export default function _Navbar(){
-  const [modalShow, setModalShow] = React.useState(false);
 
   return(
     <Navbar collapseOnSelect expand="lg" bg="info" >

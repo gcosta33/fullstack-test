@@ -73,7 +73,7 @@
             ";
             $values = array($id_brand,$flavor_name,$size_ref,$type_ref,$amout,$value);
             if($this->db->query($sql,$values)){
-                return "success";
+                return ["result"=>"success"];
             }else{
                 return NULL;
             };
@@ -89,7 +89,7 @@
                 empty($value)? NULL: "value" =>$value);
             // return(array_filter($values));
             if($this->db->update('products', array_filter($values), array('id' => $id))){
-                return "success";
+                return ["result"=>"success"];
             }else{
                 return NULL;
             };
@@ -97,7 +97,7 @@
         public function delete($id){    
             if(!empty(self::show($id))){
             if($this->db->delete('products',array('id'=>$id))){
-                    return "success";
+                    return ["result"=>"success"];
                 }else{
                     return NULL;
                 };

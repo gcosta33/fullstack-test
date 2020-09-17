@@ -1,22 +1,25 @@
 import axios from 'axios';
+
+export let progress
+
 const axiosConfig = {
+    
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept':'application/json'
-      }
+      },
+    timeout: 5000,
+      
   }
 const qs = require('querystring')
 const api = axios.create({
-    baseURL: 'http://localhost/fullstack-test'
+    baseURL: 'http://localhost/teste-unilab'
 })
 
 export async function index() {
     try {
         const response = await api.get('/products',
-            {
-                // data:{
-                // "_id": devId}
-            }
+            axiosConfig
         )
         if (response) {
             console.log(response.data);
@@ -28,9 +31,9 @@ export async function index() {
     }
 }
 export async function _delete(ids){
-    async function conetion(id){
+    // async function conetion(id){
         try {
-            const response = await api.post(`/products/delete/${id}`,
+            const response = await api.post(`/products/delete/${ids}`,
                {},axiosConfig
             )
             if (response) {
@@ -40,10 +43,10 @@ export async function _delete(ids){
         } catch (e) {
             console.log(e.message);
         }
-    }
+    // }
     
     console.log(ids);
-    ids.map(id =>conetion(id))
+    // ids.map(id =>conetion(id))
     
    
 }
@@ -79,7 +82,8 @@ export async function find(
                     amout,
                     value
                 }
-            }
+            },
+            axiosConfig
         )
         if (response) {
             console.log(response.data);
@@ -153,7 +157,7 @@ export async function create(
             axiosConfig
         )
         if (response) {
-            return response
+            return response.data
         }
     } catch (e) {
         const message = "Error"
